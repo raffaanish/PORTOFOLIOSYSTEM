@@ -1,0 +1,14 @@
+{
+  "name": "rasya-ghatfan-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Portfolio + Shop + Admin Panel untuk Rasya Ghatfan (ERGE). Siap deploy ke Vercel.",
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@vercel/blob": "^1.0.0"
+  }
+}

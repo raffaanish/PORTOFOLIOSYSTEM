@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rasya Ghatfan Portfolio</title>
+<meta name="description" content="Rasya Ghatfan (ERGE) — 3D Artist based in Jakarta. 3D flyers, stage visuals, animation, graphic design, and video editing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <nav aria-label="Main navigation">
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/shop">Shop</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div>
+      <span class="mono" id="kicker">Rasya Ghatfan &middot; 3D Artist</span>
+      <h1>PORTOFOLIO<span class="cursor" aria-hidden="true"></span></h1>
+      <div id="bio">
+        <p>Yo, I’m Rasya Ghatfan, but most people know me as ERGE. Based in Jakarta, Indonesia 🇮🇩</p>
+        <p>I started my journey as a 3D artist back in 2024, coming from a background in designing party flyers. Since then, I’ve been learning, experimenting, and pushing my skills to a whole new level.</p>
+        <p>Now, I’m exploring different sides of the creative world, from 3D art, graphic design, video editing, logo design, and many more. I’m always down to learn new things, try different styles, and turn random ideas into something dope.</p>
+        <p>Still growing, still creating, and always looking for the next level.</p>
+      </div>
+    </div>
+    <aside class="spec" aria-label="Skill summary">
+      <span class="mono">Spec sheet</span>
+      <div><span>Main</span><b>3D Flyer &amp; Stage Visual</b></div>
+      <div><span>Also</span><b>3D Animation, Graphic Design</b></div>
+      <div><span>Content</span><b>Social Media, Video Editing</b></div>
+      <div><span>Output</span><b>4K, LED wall, Reels</b></div>
+      <div><span>Status</span><b>Open for projects</b></div>
+    </aside>
+  </section>
+
+  <section class="wrap" id="work" aria-labelledby="work-title">
+    <div class="archive-head">
+      <div>
+        <span class="mono" id="count">Loading…</span>
+        <h2 id="work-title">Work archive</h2>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Category filter"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="wrap about" id="about">
+    <div>
+      <span class="mono">About</span>
+      <h2>From brief to final file.</h2>
+    </div>
+    <div>
+      <p>My process starts with a brief and references, then moves to concept, production, and finishing for the target platform: LED screen, print, or social media.</p>
+      <p>Revisions are discussed at every stage so the final result stays close to the client's vision.</p>
+      <span class="mono">Tools</span>
+      <div class="tools">
+        <span>Blender</span><span>CapCut</span><span>Adobe Photoshop</span><span>After Effects</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap contact" id="contact">
+    <div>
+      <span class="mono">Contact</span>
+      <h2>Have a project? Tell me the idea.</h2>
+      <p>Send a short brief, references, deadline, and budget range. I reply within 1 to 2 working days.</p>
+    </div>
+    <div>
+      <div class="mailrow">
+        <code id="email">raffaanish@gmail.com</code>
+        <button class="btn" type="button" id="copy">Copy</button>
+      </div>
+      <div class="social" id="social">
+        <a href="https://www.instagram.com/rasyaaghatfan/" target="_blank" rel="noopener">Instagram @rasyaaghatfan</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">3D Artist</span>
+    <span class="mono">&copy; 2026 Rasya Ghatfan</span>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Work details">
+  <button class="btn lb-close" type="button" id="close">Close</button>
+  <div class="lb-inner">
+    <div class="lb-art" id="lbArt"></div>
+    <div class="lb-info">
+      <span class="mono" id="lbCat"></span>
+      <h3 id="lbTitle"></h3>
+      <dl id="lbMeta"></dl>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/site.js"></script>
+<script>
+(async function () {
+  const { esc } = Site;
+  const grid = document.getElementById('grid');
+  const count = document.getElementById('count');
+  const filtersEl = document.getElementById('filters');
+
+  let data;
+  try { data = await Site.load(); }
+  catch (e) { count.textContent = 'Could not load works. Please refresh.'; return; }
+  const works = data.works || [];
+  const s = data.settings || {};
+
+  // --- teks dari pengaturan admin ---
+  if (s.name) document.getElementById('kicker').textContent = s.name + ' · ' + (s.role || '3D Artist');
+  if (s.bio && s.bio.length) document.getElementById('bio').innerHTML = s.bio.map((p) => '<p>' + esc(p) + '</p>').join('');
+  Site.applyContact(s);
+
+  // --- media ---
+  const media = (w, big) => {
+    const dw = w.width || 1080, dh = w.height || 1920;
+    if (w.type === 'video') {
+      const poster = w.poster ? ' poster="' + esc(w.poster) + '"' : '';
+      return big
+        ? '<video src="' + esc(w.src) + '"' + poster + ' width="' + dw + '" height="' + dh + '" controls autoplay loop playsinline></video>'
+        : '<video src="' + esc(w.src) + '"' + poster + ' width="' + dw + '" height="' + dh + '" muted autoplay loop playsinline preload="metadata" aria-label="' + esc(w.title) + '"></video>';
+    }
+    return '<img src="' + esc(w.src) + '" width="' + dw + '" height="' + dh + '" alt="' + esc(w.title) + '"' + (big ? '' : ' loading="lazy"') + '>';
+  };
+
+  works.forEach((w, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'tile'; b.dataset.cat = w.category; b.dataset.i = i;
+    b.setAttribute('aria-label', 'Open ' + w.title);
+    b.innerHTML = media(w, false) + '<span class="cap"><strong>' + esc(w.title) + '</strong><span class="mono">' + esc(w.category) + '</span></span>';
+    grid.appendChild(b);
+  });
+  count.textContent = works.length + (works.length === 1 ? ' work' : ' works');
+  if (!works.length) grid.outerHTML = '<div class="empty">No works yet.</div>';
+
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    grid.querySelectorAll('video').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
+  }
+
+  // --- filter kategori (hanya kategori yang punya karya) ---
+  const used = [...new Set(works.map((w) => w.category).filter(Boolean))];
+  const order = (s.workCategories || []).filter((c) => used.includes(c)).concat(used.filter((c) => !(s.workCategories || []).includes(c)));
+  if (order.length > 1) {
+    filtersEl.innerHTML = ['All'].concat(order).map((c, i) =>
+      '<button type="button" data-f="' + (i === 0 ? 'all' : esc(c)) + '" aria-pressed="' + (i === 0) + '">' + esc(c) + '</button>').join('');
+    const btns = filtersEl.querySelectorAll('button');
+    btns.forEach((f) => f.addEventListener('click', () => {
+      btns.forEach((x) => x.setAttribute('aria-pressed', x === f ? 'true' : 'false'));
+      let n = 0;
+      grid.querySelectorAll('.tile').forEach((t) => {
+        const show = f.dataset.f === 'all' || t.dataset.cat === f.dataset.f;
+        t.hidden = !show; if (show) n++;
+      });
+      count.textContent = n + (n === 1 ? ' work' : ' works');
+    }));
+  }
+
+  // --- lightbox ---
+  const lb = document.getElementById('lb');
+  let lastFocus = null;
+  function open(i) {
+    const w = works[i];
+    document.getElementById('lbArt').innerHTML = media(w, true);
+    document.getElementById('lbCat').textContent = w.category;
+    document.getElementById('lbTitle').textContent = w.title;
+    document.getElementById('lbMeta').innerHTML =
+      (w.software ? '<div><dt>Software</dt><dd>' + esc(w.software) + '</dd></div>' : '') +
+      (w.metaValue ? '<div><dt>' + esc(w.metaLabel || 'Format') + '</dt><dd>' + esc(w.metaValue) + '</dd></div>' : '');
+    lastFocus = document.activeElement;
+    lb.hidden = false;
+    document.getElementById('close').focus();
+  }
+  function close() { lb.hidden = true; document.getElementById('lbArt').innerHTML = ''; if (lastFocus) lastFocus.focus(); }
+  grid.addEventListener('click', (e) => { const t = e.target.closest('.tile'); if (t) open(+t.dataset.i); });
+  document.getElementById('close').addEventListener('click', close);
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lb.hidden) close(); });
+})();
+</script>
+</body>
+</html>

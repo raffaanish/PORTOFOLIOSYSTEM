@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Rasya Ghatfan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&display=swap">
+<style>
+:root { --bg:#0a0a0a; --surface:#141414; --line:#2e2e2e; --fg:#f2f2f2; --muted:#909090; --soft:#c8c8c8; --danger:#ff6b6b; --ok:#7ddc9a;
+  --display:"Special Elite","Courier New",monospace; --body:"Courier Prime","Courier New",monospace; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 var(--body); padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0); }
+[hidden] { display:none !important; }
+h1,h2,h3 { font-family:var(--display); font-weight:400; margin:0; }
+a { color:inherit; }
+.mono { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+button, input, select, textarea { font:inherit; color:inherit; }
+.btn { background:var(--fg); color:var(--bg); border:1px solid var(--fg); padding:9px 16px; cursor:pointer; font-weight:700; font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; display:inline-block; }
+.btn:hover { background:#d9d9d9; }
+.btn:disabled { opacity:.4; cursor:not-allowed; }
+.btn.ghost { background:transparent; color:var(--fg); border-color:var(--line); }
+.btn.ghost:hover { border-color:var(--fg); background:transparent; }
+.btn.danger { background:transparent; color:var(--danger); border-color:var(--danger); }
+.btn.danger:hover { background:var(--danger); color:var(--bg); }
+.btn.sm { padding:5px 10px; font-size:11px; }
+
+input[type=text], input[type=password], input[type=number], input[type=email], input[type=url], select, textarea {
+  width:100%; background:var(--bg); border:1px solid var(--line); padding:10px 12px; border-radius:0; }
+input:focus, select:focus, textarea:focus, .btn:focus-visible, button:focus-visible { outline:2px solid var(--fg); outline-offset:2px; }
+textarea { min-height:110px; resize:vertical; }
+label { display:block; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.field { margin-bottom:16px; }
+.row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.hint { font-size:12px; color:var(--muted); margin:6px 0 0; text-transform:none; letter-spacing:0; }
+
+/* login */
+#login { min-height:100vh; display:grid; place-items:center; padding:20px; }
+.card { background:var(--surface); border:1px solid var(--fg); padding:28px; width:100%; max-width:400px; }
+.card h1 { font-size:26px; margin:6px 0 18px; }
+.err { color:var(--danger); font-size:13px; margin:10px 0 0; min-height:1.2em; }
+.notice { border:1px dashed var(--danger); color:var(--danger); padding:10px 12px; font-size:13px; margin-bottom:16px; }
+
+/* app */
+.top { position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--line); display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap; padding:12px 20px; }
+.top .brand { font-family:var(--display); font-size:18px; }
+.tabs { display:flex; gap:6px; flex-wrap:wrap; }
+.tabs button { background:transparent; border:1px solid var(--line); color:var(--muted); padding:8px 14px; cursor:pointer; font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+.tabs button[aria-selected=true] { background:var(--fg); color:var(--bg); border-color:var(--fg); }
+.top .right { display:flex; gap:8px; align-items:center; }
+main { max-width:980px; margin:0 auto; padding:24px 20px 80px; }
+.banner { background:var(--surface); border:1px solid var(--danger); color:var(--danger); padding:12px 14px; margin:16px 20px 0; max-width:940px; margin-inline:auto; font-size:13px; }
+.head { display:flex; justify-content:space-between; align-items:end; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
+.head h2 { font-size:26px; }
+.items { display:grid; gap:10px; }
+.item { display:grid; grid-template-columns:64px 1fr auto; gap:14px; align-items:center; background:var(--surface); border:1px solid var(--line); padding:10px; }
+.thumb { width:64px; height:64px; background:#000; overflow:hidden; display:grid; place-items:center; color:var(--muted); font-size:10px; }
+.thumb img, .thumb video { width:100%; height:100%; object-fit:cover; display:block; }
+.item .meta { min-width:0; display:grid; }
+.item .meta strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.acts { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+.pill { display:inline-block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; border:1px solid var(--line); padding:1px 6px; margin-left:6px; color:var(--muted); }
+.pill.soldout { color:var(--danger); border-color:var(--danger); }
+.pill.hidden { color:var(--muted); }
+.empty { border:1px dashed var(--line); padding:40px 20px; text-align:center; color:var(--muted); }
+
+/* dialog */
+dialog { background:var(--surface); color:var(--fg); border:1px solid var(--fg); padding:0; width:min(640px, 94vw); max-height:92vh; }
+dialog::backdrop { background:rgba(0,0,0,.8); }
+.dlg-h { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--surface); z-index:1; }
+.dlg-h h3 { font-size:20px; }
+.dlg-b { padding:20px; }
+.dlg-f { display:flex; justify-content:flex-end; gap:10px; padding:14px 20px; border-top:1px solid var(--line); position:sticky; bottom:0; background:var(--surface); }
+.preview { margin-top:10px; background:#000; border:1px solid var(--line); display:grid; place-items:center; min-height:60px; color:var(--muted); font-size:12px; }
+.preview img, .preview video { max-width:100%; max-height:300px; display:block; }
+.prog { margin-top:8px; border:1px solid var(--line); height:20px; position:relative; }
+.prog i { position:absolute; inset:0 auto 0 0; width:0; background:var(--fg); }
+.prog span { position:absolute; inset:0; display:grid; place-items:center; font-size:11px; mix-blend-mode:difference; color:#fff; }
+.imgs { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+.imgs figure { margin:0; width:96px; border:1px solid var(--line); background:#000; }
+.imgs img { width:96px; height:96px; object-fit:cover; display:block; }
+.imgs figcaption { display:flex; justify-content:space-between; }
+.imgs figcaption button { flex:1; background:transparent; border:0; border-top:1px solid var(--line); cursor:pointer; padding:3px 0; color:var(--soft); }
+.imgs figcaption button:hover { background:var(--fg); color:var(--bg); }
+details { margin-top:10px; } summary { cursor:pointer; color:var(--muted); font-size:13px; }
+#toast { position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--fg); color:var(--bg); padding:10px 18px; font-weight:700; font-size:13px; z-index:99; max-width:90vw; }
+#toast.bad { background:var(--danger); }
+@media (max-width:640px) { .row { grid-template-columns:1fr; } .item { grid-template-columns:56px 1fr; } .item .acts { grid-column:1 / -1; justify-content:flex-start; } }
+</style>
+</head>
+<body>
+<div id="toast" hidden></div>
+
+<!-- LOGIN -->
+<section id="login" hidden>
+  <form class="card" id="loginForm">
+    <span class="mono">ERGE · Admin</span>
+    <h1>Masuk</h1>
+    <div id="loginNotice"></div>
+    <div class="field">
+      <label for="pw">Password</label>
+      <input type="password" id="pw" autocomplete="current-password" required autofocus>
+    </div>
+    <button class="btn" type="submit" id="loginBtn">Masuk</button>
+    <p class="err" id="loginErr" role="alert"></p>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="app" hidden>
+  <header class="top">
+    <span class="brand">ERGE · Admin</span>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="works" aria-selected="true">Karya</button>
+      <button role="tab" data-tab="products" aria-selected="false">Produk</button>
+      <button role="tab" data-tab="settings" aria-selected="false">Pengaturan</button>
+    </div>
+    <div class="right">
+      <a class="btn ghost sm" href="/" target="_blank" rel="noopener">Lihat situs</a>
+      <button class="btn ghost sm" id="logout" type="button">Keluar</button>
+    </div>
+  </header>
+  <div class="banner" id="banner" hidden></div>
+
+  <main>
+    <section id="tab-works">
+      <div class="head"><div><span class="mono">Portfolio</span><h2>Karya</h2></div><button class="btn" id="addWork" type="button">+ Tambah karya</button></div>
+      <div class="items" id="worksList"></div>
+    </section>
+
+    <section id="tab-products" hidden>
+      <div class="head"><div><span class="mono">Shop</span><h2>Produk</h2></div><button class="btn" id="addProduct" type="button">+ Tambah produk</button></div>
+      <div class="items" id="productsList"></div>
+    </section>
+
+    <section id="tab-settings" hidden>
+      <div class="head"><div><span class="mono">Situs</span><h2>Pengaturan</h2></div></div>
+      <form id="settingsForm">
+        <div class="row">
+          <div class="field"><label for="s-name">Nama</label><input type="text" id="s-name"></div>
+          <div class="field"><label for="s-role">Peran</label><input type="text" id="s-role"></div>
+        </div>
+        <div class="field"><label for="s-bio">Bio (pisahkan paragraf dengan baris kosong)</label><textarea id="s-bio" rows="8"></textarea></div>
+        <div class="row">
+          <div class="field"><label for="s-email">Email kontak</label><input type="email" id="s-email"></div>
+          <div class="field"><label for="s-ig">Username Instagram</label><input type="text" id="s-ig" placeholder="rasyaaghatfan"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="s-wa">Nomor WhatsApp (untuk order)</label><input type="text" id="s-wa" inputmode="numeric" placeholder="6281234567890"><p class="hint">Format internasional tanpa + atau spasi. Dipakai tombol “Order via WhatsApp” di Shop.</p></div>
+          <div class="field"><label for="s-cur">Mata uang Shop</label><select id="s-cur"><option value="IDR">IDR (Rupiah)</option><option value="USD">USD (Dollar)</option></select></div>
+        </div>
+        <div class="field"><label for="s-intro">Teks pengantar Shop</label><input type="text" id="s-intro"></div>
+        <div class="field"><label for="s-cats">Kategori karya (satu per baris)</label><textarea id="s-cats" rows="6"></textarea></div>
+        <button class="btn" type="submit">Simpan pengaturan</button>
+      </form>
+    </section>
+  </main>
+</div>
+
+<dialog id="dlg"></dialog>
+
+<script type="module">
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const newId = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+const state = { works: [], products: [], settings: {}, blob: true };
+
+/* ---------- util UI ---------- */
+let toastTimer;
+function toast(msg, bad = false) {
+  const t = $('#toast'); t.textContent = msg; t.className = bad ? 'bad' : ''; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => (t.hidden = true), bad ? 6000 : 2200);
+}
+
+async function api(url, opts = {}) {
+  const res = await fetch(url, { credentials: 'same-origin', ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+  let data = null; try { data = await res.json(); } catch {}
+  if (res.status === 401 && url !== '/api/auth') { showLogin(); throw new Error('Sesi berakhir, silakan masuk lagi.'); }
+  if (!res.ok) throw new Error((data && data.error) || 'Error ' + res.status);
+  return data;
+}
+
+/* ---------- login ---------- */
+function showLogin(info) {
+  $('#app').hidden = true; $('#login').hidden = false;
+  const n = $('#loginNotice');
+  n.innerHTML = info && !info.configured ? '<div class="notice">ADMIN_PASSWORD belum diatur di Environment Variables Vercel. Atur dulu, lalu redeploy.</div>' : '';
+}
+$('#loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = $('#loginBtn'); btn.disabled = true; $('#loginErr').textContent = '';
+  try {
+    await api('/api/auth', { method: 'POST', body: JSON.stringify({ password: $('#pw').value }) });
+    $('#pw').value = '';
+    await boot();
+  } catch (err) { $('#loginErr').textContent = err.message; }
+  btn.disabled = false;
+});
+$('#logout').addEventListener('click', async () => { try { await api('/api/auth', { method: 'DELETE' }); } catch {} location.reload(); });
+
+async function boot() {
+  const st = await api('/api/auth');
+  if (!st.authed) return showLogin(st);
+  const d = await api('/api/admin');
+  Object.assign(state, { works: d.works, products: d.products, settings: d.settings, blob: d.blob });
+  $('#login').hidden = true; $('#app').hidden = false;
+  const b = $('#banner');
+  b.hidden = state.blob;
+  if (!state.blob) b.textContent = 'Vercel Blob belum terhubung ke project ini, jadi upload dan penyimpanan belum berfungsi. Buka Vercel → Storage → Create Blob → Connect Project, lalu redeploy.';
+  renderAll();
+}
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tabs button').forEach((b) => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach((x) => x.setAttribute('aria-selected', x === b));
+  ['works', 'products', 'settings'].forEach((t) => ($('#tab-' + t).hidden = t !== b.dataset.tab));
+}));
+
+/* ---------- simpan & hapus file ---------- */
+async function save(key) {
+  const r = await api('/api/admin?key=' + key, { method: 'PUT', body: JSON.stringify(state[key]) });
+  state[key] = r.data;
+}
+async function deleteFiles(urls) {
+  urls = [...new Set(urls.filter(Boolean))];
+  if (!urls.length) return;
+  try { await api('/api/admin', { method: 'DELETE', body: JSON.stringify({ urls }) }); } catch (e) { console.warn(e); }
+}
+
+/* ---------- upload (langsung ke Vercel Blob) ---------- */
+let uploadFn;
+async function uploadFile(file, onProgress) {
+  if (!uploadFn) uploadFn = (await import('https://esm.sh/@vercel/blob@1/client')).upload;
+  const safe = file.name.replace(/[^a-zA-Z0-9._-]+/g, '-').slice(-80) || 'file';
+  const blob = await uploadFn('uploads/' + safe, file, {
+    access: 'public', handleUploadUrl: '/api/upload', multipart: file.size > 15 * 1024 * 1024,
+    onUploadProgress: (p) => onProgress && onProgress(Math.round(p.percentage))
+  });
+  return blob.url;
+}
+function progressUI(el) {
+  return (pct, label) => {
+    el.hidden = pct == null;
+    if (pct == null) return;
+    el.querySelector('i').style.width = pct + '%';
+    el.querySelector('span').textContent = (label || 'Mengunggah') + ' ' + pct + '%';
+  };
+}
+function imageMeta(file) {
+  return new Promise((resolve) => {
+    const u = URL.createObjectURL(file), im = new Image();
+    im.onload = () => { URL.revokeObjectURL(u); resolve({ width: im.naturalWidth, height: im.naturalHeight }); };
+    im.onerror = () => { URL.revokeObjectURL(u); resolve(null); };
+    im.src = u;
+  });
+}
+function videoMeta(file) {
+  return new Promise((resolve) => {
+    const u = URL.createObjectURL(file), v = document.createElement('video');
+    v.muted = true; v.playsInline = true; v.preload = 'metadata'; v.src = u;
+    const done = (r) => { URL.revokeObjectURL(u); resolve(r); };
+    v.onerror = () => done(null);
+    v.onloadedmetadata = () => { v.currentTime = Math.min(0.5, (v.duration || 1) / 2) || 0.1; };
+    v.onseeked = () => {
+      v.onseeked = null;
+      const w = v.videoWidth, h = v.videoHeight;
+      try {
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(v, 0, 0, w, h);
+        c.toBlob((b) => done({ width: w, height: h, poster: b }), 'image/jpeg', 0.82);
+      } catch { done({ width: w, height: h, poster: null }); }
+    };
+  });
+}
+const isVideoUrl = (u) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(u || '');
+
+/* ---------- render daftar ---------- */
+function thumbHtml(w) {
+  if (w.type === 'video') return w.poster ? `<img src="${esc(w.poster)}" alt="">` : `<video src="${esc(w.src)}" muted preload="metadata"></video>`;
+  return w.src ? `<img src="${esc(w.src)}" alt="">` : 'no img';
+}
+function renderWorks() {
+  const el = $('#worksList');
+  if (!state.works.length) { el.innerHTML = '<div class="empty">Belum ada karya. Klik “+ Tambah karya”.</div>'; return; }
+  el.innerHTML = state.works.map((w, i) => `
+    <article class="item" data-i="${i}">
+      <div class="thumb">${thumbHtml(w)}</div>
+      <div class="meta"><strong>${esc(w.title)}</strong><span class="mono">${esc(w.category || '—')} · ${w.type === 'video' ? 'Video' : 'Foto'}</span></div>
+      <div class="acts">
+        <button class="btn ghost sm" data-act="up" ${i === 0 ? 'disabled' : ''} aria-label="Naikkan">↑</button>
+        <button class="btn ghost sm" data-act="down" ${i === state.works.length - 1 ? 'disabled' : ''} aria-label="Turunkan">↓</button>
+        <button class="btn ghost sm" data-act="edit">Edit</button>
+        <button class="btn danger sm" data-act="del">Hapus</button>
+      </div>
+    </article>`).join('');
+}
+function priceText(p) {
+  const n = Number(p.price) || 0;
+  return state.settings.currency === 'USD' ? '$' + n.toFixed(2) : 'Rp ' + n.toLocaleString('id-ID');
+}
+function renderProducts() {
+  const el = $('#productsList');
+  if (!state.products.length) { el.innerHTML = '<div class="empty">Belum ada produk. Klik “+ Tambah produk”.</div>'; return; }
+  el.innerHTML = state.products.map((p, i) => `
+    <article class="item" data-i="${i}">
+      <div class="thumb">${p.images[0] ? `<img src="${esc(p.images[0])}" alt="">` : 'no img'}</div>
+      <div class="meta"><strong>${esc(p.name)}${p.status !== 'active' ? `<span class="pill ${p.status}">${p.status === 'soldout' ? 'habis' : 'tersembunyi'}</span>` : ''}</strong><span class="mono">${esc(priceText(p))} · ${esc(p.category || '—')}</span></div>
+      <div class="acts">
+        <button class="btn ghost sm" data-act="up" ${i === 0 ? 'disabled' : ''} aria-label="Naikkan">↑</button>
+        <button class="btn ghost sm" data-act="down" ${i === state.products.length - 1 ? 'disabled' : ''} aria-label="Turunkan">↓</button>
+        <button class="btn ghost sm" data-act="edit">Edit</button>
+        <button class="btn danger sm" data-act="del">Hapus</button>
+      </div>
+    </article>`).join('');
+}
+function fillSettings() {
+  const s = state.settings;
+  $('#s-name').value = s.name || ''; $('#s-role').value = s.role || '';
+  $('#s-bio').value = (s.bio || []).join('\n\n');
+  $('#s-email').value = s.email || ''; $('#s-ig').value = s.instagram || '';
+  $('#s-wa').value = s.whatsapp || ''; $('#s-cur').value = s.currency || 'IDR';
+  $('#s-intro').value = s.shopIntro || ''; $('#s-cats').value = (s.workCategories || []).join('\n');
+}
+function renderAll() { renderWorks(); renderProducts(); fillSettings(); }
+
+/* ---------- aksi daftar (urut / edit / hapus) ---------- */
+function listHandler(key, editFn, label) {
+  return async (e) => {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const i = +btn.closest('.item').dataset.i, arr = state[key], act = btn.dataset.act;
+    try {
+      if (act === 'edit') return editFn(i);
+      if (act === 'up' || act === 'down') {
+        const j = act === 'up' ? i - 1 : i + 1;
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        await save(key); key === 'works' ? renderWorks() : renderProducts(); toast('Urutan disimpan');
+      }
+      if (act === 'del') {
+        if (!confirm(`Hapus ${label} “${arr[i].title || arr[i].name}”? File yang diunggah ikut dihapus.`)) return;
+        const [gone] = arr.splice(i, 1);
+        await save(key);
+        await deleteFiles([gone.src, gone.poster, ...(gone.images || [])]);
+        key === 'works' ? renderWorks() : renderProducts(); toast('Terhapus');
+      }
+    } catch (err) { toast(err.message, true); await boot().catch(() => {}); }
+  };
+}
+$('#worksList').addEventListener('click', listHandler('works', (i) => openWork(i), 'karya'));
+$('#productsList').addEventListener('click', listHandler('products', (i) => openProduct(i), 'produk'));
+$('#addWork').addEventListener('click', () => openWork(-1));
+$('#addProduct').addEventListener('click', () => openProduct(-1));
+
+/* ---------- dialog helper ---------- */
+const dlg = $('#dlg');
+function openDialog(title, body, onSave, onClose) {
+  dlg.innerHTML = `<form method="dialog" id="dForm">
+    <div class="dlg-h"><h3>${esc(title)}</h3><button class="btn ghost sm" type="button" id="dCancel">Tutup</button></div>
+    <div class="dlg-b">${body}</div>
+    <div class="dlg-f"><button class="btn ghost" type="button" id="dCancel2">Batal</button><button class="btn" type="submit" id="dSave">Simpan</button></div></form>`;
+  let saved = false;
+  const cancel = () => dlg.close();
+  $('#dCancel').onclick = cancel; $('#dCancel2').onclick = cancel;
+  $('#dForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const b = $('#dSave'); b.disabled = true;
+    try { if ((await onSave()) !== false) { saved = true; dlg.close(); } }
+    catch (err) { toast(err.message, true); }
+    b.disabled = false;
+  };
+  dlg.onclose = () => { onClose(saved); dlg.onclose = null; };
+  dlg.showModal();
+}
+
+/* ---------- editor karya ---------- */
+function openWork(index) {
+  const isNew = index < 0;
+  const d = isNew
+    ? { id: newId(), title: '', category: state.settings.workCategories?.[0] || '', type: 'image', src: '', poster: '', width: 0, height: 0, software: '', metaLabel: 'Format', metaValue: '' }
+    : { ...state.works[index] };
+  const sess = { uploaded: [], removed: [] };
+  const cats = (state.settings.workCategories || []).map((c) => `<option value="${esc(c)}">`).join('');
+  openDialog(isNew ? 'Tambah karya' : 'Edit karya', `
+    <div class="field"><label for="w-title">Judul</label><input type="text" id="w-title" required maxlength="120" value="${esc(d.title)}"></div>
+    <div class="row">
+      <div class="field"><label for="w-cat">Kategori</label><input type="text" id="w-cat" list="catlist" maxlength="60" value="${esc(d.category)}"><datalist id="catlist">${cats}</datalist></div>
+      <div class="field"><label for="w-soft">Software (opsional)</label><input type="text" id="w-soft" maxlength="120" placeholder="Blender" value="${esc(d.software)}"></div>
+    </div>
+    <div class="field"><label for="w-file">File karya (foto atau video)</label>
+      <input type="file" id="w-file" accept="image/*,video/*">
+      <div class="prog" id="w-prog" hidden><i></i><span></span></div>
+      <p class="hint">Poster video dibuat otomatis dari frame video. Ukuran dideteksi otomatis.</p>
+      <div class="preview" id="w-prev"></div>
+      <details><summary>Atau pakai URL manual</summary>
+        <div class="field" style="margin-top:10px"><label for="w-src">URL file</label><input type="text" id="w-src" placeholder="https://… atau /img/file.jpg" value="${esc(d.src)}"></div>
+        <div class="field"><label for="w-poster">URL poster (khusus video)</label><input type="text" id="w-poster" value="${esc(d.poster)}"></div>
+      </details>
+    </div>
+    <div class="row">
+      <div class="field"><label for="w-ml">Label info</label><input type="text" id="w-ml" maxlength="40" value="${esc(d.metaLabel)}"></div>
+      <div class="field"><label for="w-mv">Isi info</label><input type="text" id="w-mv" maxlength="160" placeholder="1080x1920, 19 sec, 30 fps" value="${esc(d.metaValue)}"></div>
+    </div>`,
+  async () => {
+    d.title = $('#w-title').value.trim(); d.category = $('#w-cat').value.trim(); d.software = $('#w-soft').value.trim();
+    d.metaLabel = $('#w-ml').value.trim() || 'Format'; d.metaValue = $('#w-mv').value.trim();
+    const manualSrc = $('#w-src').value.trim(), manualPoster = $('#w-poster').value.trim();
+    if (manualSrc !== d.src) { if (d.src) sess.removed.push(d.src); d.src = manualSrc; d.type = isVideoUrl(manualSrc) ? 'video' : 'image'; }
+    if (manualPoster !== d.poster) { if (d.poster) sess.removed.push(d.poster); d.poster = manualPoster; }
+    if (!d.title) { toast('Judul wajib diisi', true); return false; }
+    if (!d.src) { toast('Unggah file atau isi URL', true); return false; }
+    if (isNew) state.works.push(d); else state.works[index] = d;
+    try { await save('works'); } catch (err) { if (isNew) state.works.pop(); throw err; }
+    await deleteFiles(sess.removed);
+    renderWorks(); toast('Karya tersimpan');
+  },
+  (saved) => { if (!saved) deleteFiles(sess.uploaded); });
+
+  const prev = $('#w-prev'), prog = progressUI($('#w-prog'));
+  const showPrev = () => {
+    prev.innerHTML = !d.src ? 'Belum ada file'
+      : d.type === 'video' ? `<video src="${esc(d.src)}" ${d.poster ? `poster="${esc(d.poster)}"` : ''} controls muted playsinline></video>` : `<img src="${esc(d.src)}" alt="">`;
+  };
+  showPrev();
+  $('#w-file').addEventListener('change', async (e) => {
+    const file = e.target.files[0]; if (!file) return;
+    const save = $('#dSave'); save.disabled = true;
+    try {
+      const video = file.type.startsWith('video/');
+      prog(0, 'Membaca file');
+      const meta = video ? await videoMeta(file) : await imageMeta(file);
+      const url = await uploadFile(file, (p) => prog(p, 'Mengunggah'));
+      sess.uploaded.push(url);
+      if (d.src && d.src !== url) sess.removed.push(d.src);
+      d.src = url; d.type = video ? 'video' : 'image';
+      if (meta) { d.width = meta.width; d.height = meta.height; }
+      if (d.poster) { sess.removed.push(d.poster); d.poster = ''; }
+      if (video && meta?.poster) {
+        const pf = new File([meta.poster], 'poster-' + file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' });
+        const purl = await uploadFile(pf, (p) => prog(p, 'Mengunggah poster'));
+        sess.uploaded.push(purl); d.poster = purl;
+      }
+      $('#w-src').value = d.src; $('#w-poster').value = d.poster;
+      if (!$('#w-mv').value && meta) $('#w-mv').value = meta.width + 'x' + meta.height;
+      showPrev(); toast('File terunggah');
+    } catch (err) { toast('Upload gagal: ' + err.message, true); }
+    prog(null); save.disabled = false; e.target.value = '';
+  });
+}
+
+/* ---------- editor produk ---------- */
+function openProduct(index) {
+  const isNew = index < 0;
+  const d = isNew
+    ? { id: newId(), name: '', price: 0, category: '', description: '', images: [], status: 'active', buyUrl: '', createdAt: Date.now() }
+    : { ...state.products[index], images: [...state.products[index].images] };
+  const sess = { uploaded: [], removed: [] };
+  openDialog(isNew ? 'Tambah produk' : 'Edit produk', `
+    <div class="field"><label for="p-name">Nama produk</label><input type="text" id="p-name" required maxlength="120" value="${esc(d.name)}"></div>
+    <div class="row">
+      <div class="field"><label for="p-price">Harga (${esc(state.settings.currency || 'IDR')})</label><input type="number" id="p-price" min="0" step="any" value="${esc(d.price)}"><p class="hint">0 = tampil “Free”.</p></div>
+      <div class="field"><label for="p-cat">Kategori</label><input type="text" id="p-cat" maxlength="60" placeholder="Preset, Asset, Print…" value="${esc(d.category)}"></div>
+    </div>
+    <div class="field"><label for="p-desc">Deskripsi</label><textarea id="p-desc" maxlength="3000">${esc(d.description)}</textarea></div>
+    <div class="row">
+      <div class="field"><label for="p-status">Status</label><select id="p-status">
+        <option value="active">Tersedia</option><option value="soldout">Habis (tampil, tidak bisa dipesan)</option><option value="hidden">Sembunyikan dari Shop</option></select></div>
+      <div class="field"><label for="p-buy">Link beli (opsional)</label><input type="text" id="p-buy" placeholder="https://tokopedia.com/… / Gumroad / dll" value="${esc(d.buyUrl)}"></div>
+    </div>
+    <div class="field"><label for="p-file">Foto produk (bisa lebih dari satu; yang pertama jadi sampul)</label>
+      <input type="file" id="p-file" accept="image/*" multiple>
+      <div class="prog" id="p-prog" hidden><i></i><span></span></div>
+      <div class="imgs" id="p-imgs"></div>
+    </div>`,
+  async () => {
+    d.name = $('#p-name').value.trim(); d.price = Number($('#p-price').value) || 0; d.category = $('#p-cat').value.trim();
+    d.description = $('#p-desc').value.trim(); d.status = $('#p-status').value; d.buyUrl = $('#p-buy').value.trim();
+    if (!d.name) { toast('Nama produk wajib diisi', true); return false; }
+    if (isNew) state.products.push(d); else state.products[index] = d;
+    try { await save('products'); } catch (err) { if (isNew) state.products.pop(); throw err; }
+    await deleteFiles(sess.removed);
+    renderProducts(); toast('Produk tersimpan');
+  },
+  (saved) => { if (!saved) deleteFiles(sess.uploaded); });
+
+  $('#p-status').value = d.status;
+  const box = $('#p-imgs'), prog = progressUI($('#p-prog'));
+  const drawImgs = () => {
+    box.innerHTML = d.images.map((u, k) => `<figure data-k="${k}"><img src="${esc(u)}" alt="">
+      <figcaption><button type="button" data-a="l" ${k === 0 ? 'disabled' : ''} aria-label="Geser kiri">←</button><button type="button" data-a="r" ${k === d.images.length - 1 ? 'disabled' : ''} aria-label="Geser kanan">→</button><button type="button" data-a="x" aria-label="Hapus foto">×</button></figcaption></figure>`).join('');
+  };
+  drawImgs();
+  box.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-a]'); if (!b) return;
+    const k = +b.closest('figure').dataset.k, a = b.dataset.a;
+    if (a === 'x') sess.removed.push(...d.images.splice(k, 1));
+    else { const j = a === 'l' ? k - 1 : k + 1; [d.images[k], d.images[j]] = [d.images[j], d.images[k]]; }
+    drawImgs();
+  });
+  $('#p-file').addEventListener('change', async (e) => {
+    const files = [...e.target.files]; if (!files.length) return;
+    const save = $('#dSave'); save.disabled = true;
+    try {
+      for (let n = 0; n < files.length; n++) {
+        if (d.images.length >= 8) { toast('Maksimal 8 foto per produk', true); break; }
+        const url = await uploadFile(files[n], (p) => prog(p, `Foto ${n + 1}/${files.length}`));
+        sess.uploaded.push(url); d.images.push(url); drawImgs();
+      }
+      toast('Foto terunggah');
+    } catch (err) { toast('Upload gagal: ' + err.message, true); }
+    prog(null); save.disabled = false; e.target.value = '';
+  });
+}
+
+/* ---------- pengaturan ---------- */
+$('#settingsForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const prev = state.settings;
+  state.settings = {
+    name: $('#s-name').value, role: $('#s-role').value,
+    bio: $('#s-bio').value.split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean),
+    email: $('#s-email').value, instagram: $('#s-ig').value, whatsapp: $('#s-wa').value,
+    currency: $('#s-cur').value, shopIntro: $('#s-intro').value,
+    workCategories: $('#s-cats').value.split('\n').map((x) => x.trim()).filter(Boolean)
+  };
+  try { await save('settings'); fillSettings(); renderProducts(); toast('Pengaturan tersimpan'); }
+  catch (err) { state.settings = prev; toast(err.message, true); }
+});
+
+boot().catch((err) => { showLogin(); $('#loginErr').textContent = err.message; });
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shop — Rasya Ghatfan</title>
+<meta name="description" content="Shop by Rasya Ghatfan (ERGE): assets, presets, and prints.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <nav aria-label="Main navigation">
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/shop" aria-current="page">Shop</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap shop-head">
+    <span class="mono">ERGE &middot; Store</span>
+    <h1>SHOP<span class="cursor" aria-hidden="true"></span></h1>
+    <p id="intro">Assets, presets, and prints made by ERGE. Pick something and order directly.</p>
+  </section>
+
+  <section class="wrap" aria-labelledby="shop-title">
+    <div class="archive-head">
+      <div>
+        <span class="mono" id="count">Loading…</span>
+        <h2 id="shop-title">Products</h2>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Category filter"></div>
+    </div>
+    <div class="products" id="products" style="margin-top:20px"></div>
+  </section>
+
+  <section class="wrap contact" id="contact">
+    <div>
+      <span class="mono">Contact</span>
+      <h2>Questions about an order?</h2>
+      <p>Message me with the product name and what you need. Custom work is welcome too.</p>
+    </div>
+    <div>
+      <div class="mailrow">
+        <code id="email">raffaanish@gmail.com</code>
+        <button class="btn" type="button" id="copy">Copy</button>
+      </div>
+      <div class="social" id="social">
+        <a href="https://www.instagram.com/rasyaaghatfan/" target="_blank" rel="noopener">Instagram @rasyaaghatfan</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">3D Artist</span>
+    <span class="mono">&copy; 2026 Rasya Ghatfan</span>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Product details">
+  <button class="btn lb-close" type="button" id="close">Close</button>
+  <div class="lb-inner prod">
+    <div class="lb-art"><div id="pArt"></div><div class="thumbs" id="pThumbs"></div></div>
+    <div class="lb-info">
+      <span class="mono" id="pCat"></span>
+      <h3 id="pName"></h3>
+      <p class="price" id="pPrice"></p>
+      <p class="desc" id="pDesc"></p>
+      <div class="actions" id="pActions"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/site.js"></script>
+<script>
+(async function () {
+  const { esc, money } = Site;
+  const list = document.getElementById('products');
+  const count = document.getElementById('count');
+  const filtersEl = document.getElementById('filters');
+
+  let data;
+  try { data = await Site.load(); }
+  catch (e) { count.textContent = 'Could not load products. Please refresh.'; return; }
+  const products = data.products || [];
+  const s = data.settings || {};
+  const cur = s.currency;
+  if (s.shopIntro) document.getElementById('intro').textContent = s.shopIntro;
+  Site.applyContact(s);
+
+  const total = (n) => n + (n === 1 ? ' product' : ' products');
+  count.textContent = total(products.length);
+
+  if (!products.length) {
+    list.outerHTML = '<div class="empty">No products yet. Check back soon.</div>';
+    return;
+  }
+
+  list.innerHTML = products.map((p, i) => {
+    const img = p.images && p.images[0]
+      ? '<img src="' + esc(p.images[0]) + '" alt="' + esc(p.name) + '" loading="lazy">'
+      : '<div class="ph">No image</div>';
+    return '<button type="button" class="pcard" data-i="' + i + '" data-cat="' + esc(p.category) + '" aria-label="Open ' + esc(p.name) + '">' +
+      '<div class="pimg">' + img + (p.status === 'soldout' ? '<span class="badge">Sold out</span>' : '') + '</div>' +
+      '<div class="pinfo"><strong>' + esc(p.name) + '</strong>' +
+      (p.category ? '<span class="mono">' + esc(p.category) + '</span>' : '') +
+      '<span class="price">' + esc(money(p.price, cur)) + '</span></div></button>';
+  }).join('');
+
+  // filter kategori
+  const cats = [...new Set(products.map((p) => p.category).filter(Boolean))];
+  if (cats.length > 1) {
+    filtersEl.innerHTML = ['All'].concat(cats).map((c, i) =>
+      '<button type="button" data-f="' + (i === 0 ? 'all' : esc(c)) + '" aria-pressed="' + (i === 0) + '">' + esc(c) + '</button>').join('');
+    const btns = filtersEl.querySelectorAll('button');
+    btns.forEach((f) => f.addEventListener('click', () => {
+      btns.forEach((x) => x.setAttribute('aria-pressed', x === f ? 'true' : 'false'));
+      let n = 0;
+      list.querySelectorAll('.pcard').forEach((c) => {
+        const show = f.dataset.f === 'all' || c.dataset.cat === f.dataset.f;
+        c.hidden = !show; if (show) n++;
+      });
+      count.textContent = total(n);
+    }));
+  }
+
+  // detail produk
+  const lb = document.getElementById('lb');
+  let lastFocus = null;
+  function showImage(p, k) {
+    const imgs = p.images || [];
+    document.getElementById('pArt').innerHTML = imgs[k] ? '<img src="' + esc(imgs[k]) + '" alt="' + esc(p.name) + '">' : '<div class="ph" style="padding:80px 40px">No image</div>';
+    document.querySelectorAll('#pThumbs button').forEach((b, j) => b.setAttribute('aria-current', j === k ? 'true' : 'false'));
+  }
+  function open(i, push) {
+    const p = products[i];
+    document.getElementById('pCat').textContent = p.category || '';
+    document.getElementById('pName').textContent = p.name;
+    document.getElementById('pPrice').textContent = money(p.price, cur);
+    document.getElementById('pDesc').textContent = p.description || '';
+    const th = document.getElementById('pThumbs');
+    th.innerHTML = (p.images || []).length > 1
+      ? p.images.map((u, k) => '<button type="button" data-k="' + k + '" aria-label="Image ' + (k + 1) + '"><img src="' + esc(u) + '" alt=""></button>').join('')
+      : '';
+    th.onclick = (e) => { const b = e.target.closest('button'); if (b) showImage(p, +b.dataset.k); };
+    showImage(p, 0);
+
+    const sold = p.status === 'soldout';
+    const msg = "Hi Rasya, I'd like to order: " + p.name + ' (' + money(p.price, cur) + '). ' + location.origin + '/shop#' + p.id;
+    let act = '';
+    if (sold) act += '<span class="btn" aria-disabled="true">Sold out</span>';
+    else {
+      if (s.whatsapp) act += '<a class="btn" href="' + esc(Site.waLink(s.whatsapp, msg)) + '" target="_blank" rel="noopener">Order via WhatsApp</a>';
+      if (p.buyUrl) act += '<a class="btn' + (s.whatsapp ? ' ghost' : '') + '" href="' + esc(p.buyUrl) + '" target="_blank" rel="noopener">Buy now</a>';
+      if (!s.whatsapp && !p.buyUrl && s.email) act += '<a class="btn" href="mailto:' + esc(s.email) + '?subject=' + encodeURIComponent('Order: ' + p.name) + '&body=' + encodeURIComponent(msg) + '">Order via email</a>';
+    }
+    document.getElementById('pActions').innerHTML = act;
+    lastFocus = document.activeElement;
+    lb.hidden = false;
+    if (push) history.replaceState(null, '', '#' + p.id);
+    document.getElementById('close').focus();
+  }
+  function close() {
+    lb.hidden = true;
+    history.replaceState(null, '', location.pathname);
+    if (lastFocus) lastFocus.focus();
+  }
+  list.addEventListener('click', (e) => { const c = e.target.closest('.pcard'); if (c) open(+c.dataset.i, true); });
+  document.getElementById('close').addEventListener('click', close);
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lb.hidden) close(); });
+
+  // tautan langsung ke produk: /shop#<id>
+  const want = decodeURIComponent(location.hash.slice(1));
+  if (want) { const i = products.findIndex((p) => p.id === want); if (i > -1) open(i, false); }
+})();
+</script>
+</body>
+</html>
