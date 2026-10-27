@@ -95,7 +95,15 @@
           <div class="stat"><b>2024</b><span>Started 3D</span></div>
         </div>
       </div>
-      <div class="portrait" id="portrait" data-r="right" aria-hidden="true"></div>
+      <div class="portrait" id="portrait" data-r="right">
+        <div class="p-tilt"><div class="p-sway">
+          <div class="p-bg"><span class="p-word" aria-hidden="true">ERGE</span></div>
+          <div class="p-pop"><img class="p-img" src="/img/rasya-bust.webp" width="1128" height="740" alt="Rasya Ghatfan (ERGE), 3D artist" loading="lazy"></div>
+          <div class="p-shade" aria-hidden="true"></div>
+          <span class="p-chip a">3D Artist</span>
+          <span class="p-chip b">Blender</span>
+        </div></div>
+      </div>
     </div>
   </section>
 
@@ -251,7 +259,7 @@
     return '<img src="' + esc(w.src) + '" width="' + dw + '" height="' + dh + '" alt="' + esc(w.title) + '"' + (big ? '' : ' loading="lazy"') + '>';
   };
 
-  // --- hero feature card + about portrait memakai karya pertama ---
+  // --- hero feature card memakai karya pertama ---
   const featured = works.find((w) => w.type === 'video' && w.poster) || works.find((w) => w.type === 'image') || works[0];
   const lb = document.getElementById('lb');
   let lastFocus = null;
@@ -276,9 +284,6 @@
     fbtn.insertAdjacentHTML('afterbegin', media(featured, false).replace(' loading="lazy"', ''));
     document.getElementById('featTitle').textContent = featured.title;
     fbtn.addEventListener('click', () => open(fi));
-    const pt = document.getElementById('portrait');
-    const pw = featured;
-    pt.insertAdjacentHTML('afterbegin', media(pw, false).replace(' loading="lazy"', ''));
   } else {
     document.getElementById('feature').hidden = true;
   }
