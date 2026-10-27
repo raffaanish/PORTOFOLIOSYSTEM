@@ -121,7 +121,10 @@ window.Site = (function () {
     // scroll: progress bar, nav sembunyi saat turun & muncul saat naik, parallax
     const feature = document.querySelector('.feature');
     const blobs = document.querySelectorAll('.blob');
-    const portraitMedia = document.querySelector('.portrait > video, .portrait > img');
+    const portrait = document.getElementById('portrait');
+    const ptilt = portrait && portrait.querySelector('.p-tilt');
+    const psway = portrait && portrait.querySelector('.p-sway');
+    let trx = 0, try_ = 0, crx = 0, cry = 0, raf2 = 0;
     let lastY = window.scrollY, ticking = false, mx = 0, my = 0;
 
     function frame() {
@@ -141,13 +144,6 @@ window.Site = (function () {
           if (feature) feature.style.transform = 'translate3d(' + (mx * 14).toFixed(1) + 'px,' + (-y * 0.1 + my * 10).toFixed(1) + 'px,0) rotate(' + (3 + mx * 2).toFixed(2) + 'deg) rotateX(' + (-my * 4).toFixed(2) + 'deg) rotateY(' + (mx * 6).toFixed(2) + 'deg)';
           blobs.forEach((b, i) => { b.style.translate = (mx * (i ? -26 : 26)) + 'px ' + (y * (i ? -0.05 : 0.08)) + 'px'; });
         }
-        if (portraitMedia) {
-          const r = portraitMedia.parentElement.getBoundingClientRect();
-          if (r.bottom > 0 && r.top < innerHeight) {
-            const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
-            portraitMedia.style.transform = 'translate3d(0,' + (p * -40).toFixed(1) + 'px,0)';
-          }
-        }
       }
     }
     const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
@@ -157,6 +153,24 @@ window.Site = (function () {
       addEventListener('pointermove', (e) => {
         mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; req();
       }, { passive: true });
+    }
+    // tilt 3D foto About: mengikuti kursor, kembali ke ayunan pelan saat kursor pergi
+    if (ptilt && fine && !reduce) {
+      const loop = () => {
+        crx += (trx - crx) * 0.08; cry += (try_ - cry) * 0.08;
+        ptilt.style.setProperty('--rx', crx.toFixed(2) + 'deg');
+        ptilt.style.setProperty('--ry', cry.toFixed(2) + 'deg');
+        raf2 = (Math.abs(trx - crx) > 0.02 || Math.abs(try_ - cry) > 0.02) ? requestAnimationFrame(loop) : 0;
+      };
+      const kick = () => { if (!raf2) raf2 = requestAnimationFrame(loop); };
+      portrait.addEventListener('pointermove', (e) => {
+        const r = portrait.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+        try_ = px * 18; trx = -py * 14;
+        if (psway) psway.style.animationPlayState = 'paused';
+        kick();
+      });
+      portrait.addEventListener('pointerleave', () => { trx = 0; try_ = 0; if (psway) psway.style.animationPlayState = ''; kick(); });
     }
     frame();
 
