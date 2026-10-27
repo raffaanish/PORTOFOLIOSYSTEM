@@ -5,99 +5,179 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rasya Ghatfan Portfolio</title>
 <meta name="description" content="Rasya Ghatfan (ERGE) — 3D Artist based in Jakarta. 3D flyers, stage visuals, animation, graphic design, and video editing.">
+<meta name="theme-color" content="#0a0a0b">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 
 <header class="bar">
   <div class="wrap">
-    <nav aria-label="Main navigation">
+    <a class="logo" href="/" aria-label="ERGE home">ERGE<i></i></a>
+    <nav id="nav" aria-label="Main navigation">
       <a href="/#work">Work</a>
       <a href="/#about">About</a>
+      <a href="/#services">Services</a>
       <a href="/shop">Shop</a>
       <a href="/#contact">Contact</a>
     </nav>
+    <div class="nav-right">
+      <a class="btn small magnetic" href="/#contact">Get in touch <span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
 <main id="top">
-  <section class="wrap hero">
-    <div>
-      <span class="mono" id="kicker">Rasya Ghatfan &middot; 3D Artist</span>
-      <h1>PORTOFOLIO<span class="cursor" aria-hidden="true"></span></h1>
-      <div id="bio">
-        <p>Yo, I’m Rasya Ghatfan, but most people know me as ERGE. Based in Jakarta, Indonesia 🇮🇩</p>
-        <p>I started my journey as a 3D artist back in 2024, coming from a background in designing party flyers. Since then, I’ve been learning, experimenting, and pushing my skills to a whole new level.</p>
-        <p>Now, I’m exploring different sides of the creative world, from 3D art, graphic design, video editing, logo design, and many more. I’m always down to learn new things, try different styles, and turn random ideas into something dope.</p>
-        <p>Still growing, still creating, and always looking for the next level.</p>
-      </div>
-    </div>
-    <aside class="spec" aria-label="Skill summary">
-      <span class="mono">Spec sheet</span>
-      <div><span>Main</span><b>3D Flyer &amp; Stage Visual</b></div>
-      <div><span>Also</span><b>3D Animation, Graphic Design</b></div>
-      <div><span>Content</span><b>Social Media, Video Editing</b></div>
-      <div><span>Output</span><b>4K, LED wall, Reels</b></div>
-      <div><span>Status</span><b>Open for projects</b></div>
-    </aside>
-  </section>
-
-  <section class="wrap" id="work" aria-labelledby="work-title">
-    <div class="archive-head">
+  <!-- HERO -->
+  <section class="hero" aria-label="Intro">
+    <div class="blob b1"></div><div class="blob b2"></div>
+    <div class="wrap hero-inner">
       <div>
-        <span class="mono" id="count">Loading…</span>
-        <h2 id="work-title">Work archive</h2>
+        <h1>
+          <span class="hi line"><span id="kicker">Hey, I’m ERGE</span></span>
+          <span class="line"><span id="roleA">3D</span></span>
+          <span class="line"><span id="roleB">Artist</span></span>
+        </h1>
+        <div class="lead-row">
+          <div class="tag fade d1">Great visuals should hit hard.</div>
+          <p class="fade d2" id="heroText">From flyers to LED walls, I build 3D visuals that make people stop scrolling.</p>
+        </div>
+        <div class="hero-cta fade d3">
+          <a class="btn magnetic" href="/#work">View my work <span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn ghost plain magnetic" href="/#contact">Let’s talk</a>
+        </div>
       </div>
-      <div class="filters" id="filters" role="group" aria-label="Category filter"></div>
+      <div class="stage">
+        <span class="chip c1">Jakarta, ID</span>
+        <span class="chip c2" id="chipB">Open for projects</span>
+        <button class="feature" type="button" id="feature" aria-label="Open featured work">
+          <span class="fcap"><span class="t" id="featTitle">Featured work</span><span class="pill">View<span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></span>
+        </button>
+      </div>
     </div>
-    <div class="grid" id="grid"></div>
+    <div class="wrap">
+      <div class="hero-foot" id="heroFoot">
+        <div><b>01</b>3D Flyer</div>
+        <div><b>02</b>Stage Visual</div>
+        <div><b>03</b>Animation</div>
+        <div><b>04</b>Graphic Design</div>
+      </div>
+    </div>
   </section>
 
-  <section class="wrap about" id="about">
-    <div>
-      <span class="mono">About</span>
-      <h2>From brief to final file.</h2>
+  <!-- TOOLS MARQUEE -->
+  <div class="marquee" aria-label="Tools I use">
+    <div class="lab">Tools I work with</div>
+    <div class="mq-mask"><div class="mq-track" id="mq"></div></div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="s" id="about" aria-labelledby="about-title">
+    <div class="wrap about">
+      <div>
+        <span class="eyebrow" data-r>About me</span>
+        <h2 id="about-title" data-r style="--d:.08s">3D artist.<br>Designer.<br>Creative partner.</h2>
+        <p class="sub" data-r style="--d:.14s">From brief to final file, with revisions at every stage.</p>
+        <div class="body" id="bio" data-r style="--d:.2s">
+          <p>Yo, I’m Rasya Ghatfan, but most people know me as ERGE. Based in Jakarta, Indonesia 🇮🇩</p>
+          <p>I started my journey as a 3D artist back in 2024, coming from a background in designing party flyers. Since then, I’ve been learning, experimenting, and pushing my skills to a whole new level.</p>
+          <p>Now, I’m exploring different sides of the creative world, from 3D art, graphic design, video editing, logo design, and many more. I’m always down to learn new things, try different styles, and turn random ideas into something dope.</p>
+          <p>Still growing, still creating, and always looking for the next level.</p>
+        </div>
+        <div class="stats" data-r style="--d:.26s">
+          <div class="stat"><b data-count="0" id="stWorks">0</b><span>Selected works</span></div>
+          <div class="stat"><b data-count="6" id="stDisc">6</b><span>Disciplines</span></div>
+          <div class="stat"><b>2024</b><span>Started 3D</span></div>
+        </div>
+      </div>
+      <div class="portrait" id="portrait" data-r="right" aria-hidden="true"></div>
     </div>
-    <div>
-      <p>My process starts with a brief and references, then moves to concept, production, and finishing for the target platform: LED screen, print, or social media.</p>
-      <p>Revisions are discussed at every stage so the final result stays close to the client's vision.</p>
-      <span class="mono">Tools</span>
-      <div class="tools">
-        <span>Blender</span><span>CapCut</span><span>Adobe Photoshop</span><span>After Effects</span>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="s" id="services" style="padding-top:0" aria-labelledby="svc-title">
+    <div class="wrap">
+      <div class="s-head">
+        <div>
+          <span class="eyebrow" data-r>Services</span>
+          <h2 class="title" id="svc-title" data-r style="--d:.08s">What I can help<br>you with</h2>
+        </div>
+        <p data-r style="--d:.14s">From strategy to visuals — tailored 3D and design services to help your brand or event stand out.</p>
+      </div>
+      <div class="services" id="services-grid"></div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="s" id="work" style="padding-top:0" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="s-head">
+        <div>
+          <span class="eyebrow" data-r>Recent work</span>
+          <h2 class="title" id="work-title" data-r style="--d:.08s">Latest projects<br>&amp; collaborations</h2>
+          <span class="mono" id="count" style="display:block;margin-top:14px">Loading…</span>
+        </div>
+        <div class="filters" id="filters" role="group" aria-label="Category filter" data-r style="--d:.14s"></div>
+      </div>
+      <div class="work-grid" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="s" id="process" style="padding-top:0" aria-labelledby="proc-title">
+    <div class="wrap">
+      <div class="s-head">
+        <div>
+          <span class="eyebrow" data-r>Process</span>
+          <h2 class="title" id="proc-title" data-r style="--d:.08s">From brief to<br>final file.</h2>
+        </div>
+        <p data-r style="--d:.14s">Revisions are discussed at every stage so the final result stays close to your vision.</p>
+      </div>
+      <div class="steps">
+        <div class="step" data-r><span class="n">01</span><h3>Brief</h3><p>Send the idea, references, deadline, and budget range.</p></div>
+        <div class="step" data-r style="--d:.08s"><span class="n">02</span><h3>Concept</h3><p>Moodboard, direction, and rough look before we commit.</p></div>
+        <div class="step" data-r style="--d:.16s"><span class="n">03</span><h3>Production</h3><p>Modeling, lighting, animation, and edit in Blender, After Effects and more.</p></div>
+        <div class="step" data-r style="--d:.24s"><span class="n">04</span><h3>Finishing</h3><p>Final export tuned for LED screen, print, or social media.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="wrap contact" id="contact">
-    <div>
-      <span class="mono">Contact</span>
-      <h2>Have a project? Tell me the idea.</h2>
-      <p>Send a short brief, references, deadline, and budget range. I reply within 1 to 2 working days.</p>
-    </div>
-    <div>
-      <div class="mailrow">
-        <code id="email">raffaanish@gmail.com</code>
-        <button class="btn" type="button" id="copy">Copy</button>
+  <!-- CONTACT -->
+  <section class="wrap" id="contact" aria-labelledby="contact-title">
+    <div class="contact" data-r="zoom">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h2 id="contact-title">Have a project?<br>Tell me the idea.</h2>
+        <p>Send a short brief, references, deadline, and budget range. I reply within 1 to 2 working days.</p>
       </div>
-      <div class="social" id="social">
-        <a href="https://www.instagram.com/rasyaaghatfan/" target="_blank" rel="noopener">Instagram @rasyaaghatfan</a>
+      <div>
+        <div class="mailrow">
+          <code id="email">raffaanish@gmail.com</code>
+          <button class="btn dark magnetic" type="button" id="copy"><span class="lab-t">Copy</span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></span></button>
+        </div>
+        <div class="social" id="social">
+          <a href="https://www.instagram.com/rasyaaghatfan/" target="_blank" rel="noopener">Instagram @rasyaaghatfan</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    <span class="mono">3D Artist</span>
+  <p class="big-word" aria-hidden="true">ERGE</p>
+  <div class="wrap row">
+    <span class="mono">3D Artist · Jakarta</span>
     <span class="mono">&copy; 2026 Rasya Ghatfan</span>
   </div>
 </footer>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Work details">
-  <button class="btn lb-close" type="button" id="close">Close</button>
+  <button class="btn plain lb-close" type="button" id="close">Close</button>
   <div class="lb-inner">
     <div class="lb-art" id="lbArt"></div>
     <div class="lb-info">
@@ -111,10 +191,35 @@
 <script src="/assets/site.js"></script>
 <script>
 (async function () {
-  const { esc } = Site;
+  const { esc, ARROW } = Site;
   const grid = document.getElementById('grid');
   const count = document.getElementById('count');
   const filtersEl = document.getElementById('filters');
+
+  const BLURB = {
+    '3D Flyer': 'Scroll-stopping 3D flyers and party visuals with real depth, lighting and attitude.',
+    'Stage Visual': 'LED wall and stage visuals designed to light up the whole venue.',
+    'Animation': 'Smooth 3D animation and motion that brings your idea to life.',
+    'Graphic Design': 'Posters, logos and brand graphics with a clean, bold finish.',
+    'Social Media': 'Ready-to-post content tuned for Reels, Stories and feeds.',
+    'Video Edit': 'Sharp, rhythmic edits for reels, promos and event recaps.'
+  };
+  const DEFAULT_CATS = ['3D Flyer', 'Stage Visual', 'Animation', 'Graphic Design', 'Social Media', 'Video Edit'];
+
+  // --- tools marquee (tidak tergantung API) ---
+  const tools = ['Blender', 'Adobe Photoshop', 'After Effects', 'CapCut', '3D Flyer', 'Stage Visual', 'Animation'];
+  const row = tools.map((t) => '<span>' + esc(t) + '</span>').join('');
+  document.getElementById('mq').innerHTML = row + row;
+
+  // --- services (bisa tampil walau API gagal) ---
+  function renderServices(cats) {
+    document.getElementById('services-grid').innerHTML = cats.map((c, i) =>
+      '<article class="svc" data-r style="--d:' + (i % 3) * 0.08 + 's"><div><span class="n">' + String(i + 1).padStart(2, '0') + '</span><span class="bar-l"></span><h3>' + esc(c) + '</h3><p>' + esc(BLURB[c] || 'Custom visuals tailored to your brief and platform.') + '</p></div></article>').join('');
+    document.getElementById('heroFoot').innerHTML = cats.slice(0, 4).map((c, i) => '<div><b>' + String(i + 1).padStart(2, '0') + '</b>' + esc(c) + '</div>').join('');
+    document.getElementById('stDisc').dataset.count = cats.length;
+    Site.reveal(); Site.bindFx(); Site.bindCounters();
+  }
+  renderServices(DEFAULT_CATS);
 
   let data;
   try { data = await Site.load(); }
@@ -123,9 +228,16 @@
   const s = data.settings || {};
 
   // --- teks dari pengaturan admin ---
-  if (s.name) document.getElementById('kicker').textContent = s.name + ' · ' + (s.role || '3D Artist');
+  if (s.name) document.getElementById('kicker').textContent = 'Hey, I’m ' + (s.name.split(' ')[0] === 'Rasya' ? 'ERGE' : s.name);
+  if (s.role) {
+    const parts = s.role.trim().split(/\s+/);
+    document.getElementById('roleA').textContent = parts.length > 1 ? parts.slice(0, -1).join(' ') : parts[0];
+    document.getElementById('roleB').textContent = parts.length > 1 ? parts[parts.length - 1] : '';
+  }
   if (s.bio && s.bio.length) document.getElementById('bio').innerHTML = s.bio.map((p) => '<p>' + esc(p) + '</p>').join('');
   Site.applyContact(s);
+  const cats = (s.workCategories && s.workCategories.length) ? s.workCategories : DEFAULT_CATS;
+  renderServices(cats);
 
   // --- media ---
   const media = (w, big) => {
@@ -139,18 +251,57 @@
     return '<img src="' + esc(w.src) + '" width="' + dw + '" height="' + dh + '" alt="' + esc(w.title) + '"' + (big ? '' : ' loading="lazy"') + '>';
   };
 
+  // --- hero feature card + about portrait memakai karya pertama ---
+  const featured = works.find((w) => w.type === 'video' && w.poster) || works.find((w) => w.type === 'image') || works[0];
+  const lb = document.getElementById('lb');
+  let lastFocus = null;
+  function open(i) {
+    const w = works[i];
+    document.getElementById('lbArt').innerHTML = media(w, true);
+    document.getElementById('lbCat').textContent = w.category;
+    document.getElementById('lbTitle').textContent = w.title;
+    document.getElementById('lbMeta').innerHTML =
+      (w.software ? '<div><dt>Software</dt><dd>' + esc(w.software) + '</dd></div>' : '') +
+      (w.metaValue ? '<div><dt>' + esc(w.metaLabel || 'Format') + '</dt><dd>' + esc(w.metaValue) + '</dd></div>' : '');
+    lastFocus = document.activeElement;
+    lb.classList.remove('out');
+    lb.hidden = false;
+    document.getElementById('close').focus();
+  }
+  function close() { Site.closeLb(lb, () => { document.getElementById('lbArt').innerHTML = ''; if (lastFocus) lastFocus.focus(); }); }
+
+  if (featured) {
+    const fi = works.indexOf(featured);
+    const fbtn = document.getElementById('feature');
+    fbtn.insertAdjacentHTML('afterbegin', media(featured, false).replace(' loading="lazy"', ''));
+    document.getElementById('featTitle').textContent = featured.title;
+    fbtn.addEventListener('click', () => open(fi));
+    const pt = document.getElementById('portrait');
+    const pw = featured;
+    pt.insertAdjacentHTML('afterbegin', media(pw, false).replace(' loading="lazy"', ''));
+  } else {
+    document.getElementById('feature').hidden = true;
+  }
+  document.getElementById('stWorks').dataset.count = works.length;
+  Site.bindCounters();
+
+  // --- kartu karya ---
   works.forEach((w, i) => {
     const b = document.createElement('button');
-    b.type = 'button'; b.className = 'tile'; b.dataset.cat = w.category; b.dataset.i = i;
+    b.type = 'button'; b.className = 'card'; b.dataset.cat = w.category; b.dataset.i = i;
+    b.setAttribute('data-r', ''); b.style.setProperty('--d', (i % 3) * 0.08 + 's');
     b.setAttribute('aria-label', 'Open ' + w.title);
-    b.innerHTML = media(w, false) + '<span class="cap"><strong>' + esc(w.title) + '</strong><span class="mono">' + esc(w.category) + '</span></span>';
+    b.innerHTML = '<div class="thumb">' + media(w, false) + '</div>' +
+      '<div class="meta"><div><strong>' + esc(w.title) + '</strong><span class="mono">' + esc(w.category) + '</span></div>' +
+      '<span class="pill">View' + ARROW + '</span></div>';
     grid.appendChild(b);
   });
   count.textContent = works.length + (works.length === 1 ? ' work' : ' works');
   if (!works.length) grid.outerHTML = '<div class="empty">No works yet.</div>';
+  Site.reveal(grid);
 
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    grid.querySelectorAll('video').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
+    document.querySelectorAll('video').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
   }
 
   // --- filter kategori (hanya kategori yang punya karya) ---
@@ -163,31 +314,20 @@
     btns.forEach((f) => f.addEventListener('click', () => {
       btns.forEach((x) => x.setAttribute('aria-pressed', x === f ? 'true' : 'false'));
       let n = 0;
-      grid.querySelectorAll('.tile').forEach((t) => {
+      grid.querySelectorAll('.card').forEach((t) => {
         const show = f.dataset.f === 'all' || t.dataset.cat === f.dataset.f;
-        t.hidden = !show; if (show) n++;
+        t.hidden = !show;
+        if (show) {
+          t.classList.add('in'); t.classList.remove('pop'); void t.offsetWidth;
+          t.style.setProperty('--d', '0s'); t.classList.add('pop'); t.style.animationDelay = (n * 0.06) + 's'; n++;
+        }
       });
       count.textContent = n + (n === 1 ? ' work' : ' works');
     }));
   }
 
   // --- lightbox ---
-  const lb = document.getElementById('lb');
-  let lastFocus = null;
-  function open(i) {
-    const w = works[i];
-    document.getElementById('lbArt').innerHTML = media(w, true);
-    document.getElementById('lbCat').textContent = w.category;
-    document.getElementById('lbTitle').textContent = w.title;
-    document.getElementById('lbMeta').innerHTML =
-      (w.software ? '<div><dt>Software</dt><dd>' + esc(w.software) + '</dd></div>' : '') +
-      (w.metaValue ? '<div><dt>' + esc(w.metaLabel || 'Format') + '</dt><dd>' + esc(w.metaValue) + '</dd></div>' : '');
-    lastFocus = document.activeElement;
-    lb.hidden = false;
-    document.getElementById('close').focus();
-  }
-  function close() { lb.hidden = true; document.getElementById('lbArt').innerHTML = ''; if (lastFocus) lastFocus.focus(); }
-  grid.addEventListener('click', (e) => { const t = e.target.closest('.tile'); if (t) open(+t.dataset.i); });
+  grid.addEventListener('click', (e) => { const t = e.target.closest('.card'); if (t) open(+t.dataset.i); });
   document.getElementById('close').addEventListener('click', close);
   lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lb.hidden) close(); });
