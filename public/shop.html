@@ -4,30 +4,40 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shop — Rasya Ghatfan</title>
+<meta name="theme-color" content="#0a0a0b">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="description" content="Shop by Rasya Ghatfan (ERGE): assets, presets, and prints.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
 
+<div class="progress" aria-hidden="true"></div>
+
 <header class="bar">
   <div class="wrap">
-    <nav aria-label="Main navigation">
+    <a class="logo" href="/" aria-label="ERGE home">ERGE<i></i></a>
+    <nav id="nav" aria-label="Main navigation">
       <a href="/#work">Work</a>
       <a href="/#about">About</a>
+      <a href="/#services">Services</a>
       <a href="/shop" aria-current="page">Shop</a>
       <a href="/#contact">Contact</a>
     </nav>
+    <div class="nav-right">
+      <a class="btn small magnetic" href="#contact">Get in touch <span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
 <main>
   <section class="wrap shop-head">
-    <span class="mono">ERGE &middot; Store</span>
-    <h1>SHOP<span class="cursor" aria-hidden="true"></span></h1>
-    <p id="intro">Assets, presets, and prints made by ERGE. Pick something and order directly.</p>
+    <span class="eyebrow" data-r>ERGE &middot; Store</span>
+    <h1 data-r style="--d:.08s">Shop<span style="color:var(--accent)">.</span></h1>
+    <p id="intro" data-r style="--d:.16s">Assets, presets, and prints made by ERGE. Pick something and order directly.</p>
   </section>
 
   <section class="wrap" aria-labelledby="shop-title">
@@ -38,36 +48,39 @@
       </div>
       <div class="filters" id="filters" role="group" aria-label="Category filter"></div>
     </div>
-    <div class="products" id="products" style="margin-top:20px"></div>
+    <div class="products" id="products" style="margin-top:8px"></div>
   </section>
 
-  <section class="wrap contact" id="contact">
-    <div>
-      <span class="mono">Contact</span>
-      <h2>Questions about an order?</h2>
-      <p>Message me with the product name and what you need. Custom work is welcome too.</p>
-    </div>
-    <div>
-      <div class="mailrow">
-        <code id="email">raffaanish@gmail.com</code>
-        <button class="btn" type="button" id="copy">Copy</button>
+  <section class="wrap" id="contact">
+    <div class="contact" data-r="zoom">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h2>Questions about<br>an order?</h2>
+        <p>Message me with the product name and what you need. Custom work is welcome too.</p>
       </div>
-      <div class="social" id="social">
-        <a href="https://www.instagram.com/rasyaaghatfan/" target="_blank" rel="noopener">Instagram @rasyaaghatfan</a>
+      <div>
+        <div class="mailrow">
+          <code id="email">raffaanish@gmail.com</code>
+          <button class="btn dark magnetic" type="button" id="copy"><span class="lab-t">Copy</span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></span></button>
+        </div>
+        <div class="social" id="social">
+          <a href="https://www.instagram.com/rasyaaghatfan/" target="_blank" rel="noopener">Instagram @rasyaaghatfan</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    <span class="mono">3D Artist</span>
+  <p class="big-word" aria-hidden="true">ERGE</p>
+  <div class="wrap row">
+    <span class="mono">3D Artist · Jakarta</span>
     <span class="mono">&copy; 2026 Rasya Ghatfan</span>
   </div>
 </footer>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Product details">
-  <button class="btn lb-close" type="button" id="close">Close</button>
+  <button class="btn plain lb-close" type="button" id="close">Close</button>
   <div class="lb-inner prod">
     <div class="lb-art"><div id="pArt"></div><div class="thumbs" id="pThumbs"></div></div>
     <div class="lb-info">
@@ -109,12 +122,14 @@
     const img = p.images && p.images[0]
       ? '<img src="' + esc(p.images[0]) + '" alt="' + esc(p.name) + '" loading="lazy">'
       : '<div class="ph">No image</div>';
-    return '<button type="button" class="pcard" data-i="' + i + '" data-cat="' + esc(p.category) + '" aria-label="Open ' + esc(p.name) + '">' +
+    return '<button type="button" class="pcard" data-r style="--d:' + ((i % 4) * 0.07) + 's" data-i="' + i + '" data-cat="' + esc(p.category) + '" aria-label="Open ' + esc(p.name) + '">' +
       '<div class="pimg">' + img + (p.status === 'soldout' ? '<span class="badge">Sold out</span>' : '') + '</div>' +
       '<div class="pinfo"><strong>' + esc(p.name) + '</strong>' +
       (p.category ? '<span class="mono">' + esc(p.category) + '</span>' : '') +
       '<span class="price">' + esc(money(p.price, cur)) + '</span></div></button>';
   }).join('');
+
+  Site.reveal(list);
 
   // filter kategori
   const cats = [...new Set(products.map((p) => p.category).filter(Boolean))];
@@ -165,14 +180,16 @@
     }
     document.getElementById('pActions').innerHTML = act;
     lastFocus = document.activeElement;
+    lb.classList.remove('out');
     lb.hidden = false;
     if (push) history.replaceState(null, '', '#' + p.id);
     document.getElementById('close').focus();
   }
   function close() {
-    lb.hidden = true;
-    history.replaceState(null, '', location.pathname);
-    if (lastFocus) lastFocus.focus();
+    Site.closeLb(lb, () => {
+      history.replaceState(null, '', location.pathname);
+      if (lastFocus) lastFocus.focus();
+    });
   }
   list.addEventListener('click', (e) => { const c = e.target.closest('.pcard'); if (c) open(+c.dataset.i, true); });
   document.getElementById('close').addEventListener('click', close);
